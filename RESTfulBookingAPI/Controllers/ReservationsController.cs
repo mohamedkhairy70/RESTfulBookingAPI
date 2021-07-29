@@ -120,7 +120,7 @@ namespace RESTfulBookingAPI.Controllers
                     {
                         using (var work = new UnitOfWork(context))
                         {
-                            var Asyncuser = await work.User.GetId(reservation.Id);
+                            var Asyncuser = await work.Reservation.GetId(reservation.Id);
                             if (Asyncuser.Id > 0)
                             {
                                 work.Reservation.Update(reservation);
@@ -152,21 +152,21 @@ namespace RESTfulBookingAPI.Controllers
         // Reservation: Users
         // if Not connection Error Return NoContent and Reservation User
         // api/Reservation/Put and Call Reservation FromBody
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] Reservation reservation)
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> Delete(int Id)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    if (reservation.Id > 0)
+                    if (Id > 0)
                     {
                         using (var work = new UnitOfWork(context))
                         {
-                            var Asyncreservation = await work.User.GetId(reservation.Id);
+                            var Asyncreservation = await work.Reservation.GetId(Id);
                             if (Asyncreservation.Id > 0)
                             {
-                                work.Reservation.Delete(reservation);
+                                work.Reservation.Delete(Asyncreservation);
                                 var result = await work.Commet();
                                 if (result == 1)
                                 {
@@ -181,7 +181,7 @@ namespace RESTfulBookingAPI.Controllers
                 }
                 else
                 {
-                    logger.LogError($"Faild to Delete reservation : {reservation.CustomerName}");
+                    logger.LogError($"Faild to Delete reservation");
                     return BadRequest("Faild to Delete reservation");
                 }
             }

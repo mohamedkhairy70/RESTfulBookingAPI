@@ -156,21 +156,21 @@ namespace RESTfulBookingAPI.Controllers
         // Delete: Trip
         // if Not connection Error Return NoContent and Delete Trip
         // api/Trip/Put and Call Trip FromBody
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] Trip trip)
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> Delete(int Id)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    if (trip.Id > 0)
+                    if (Id > 0)
                     {
                         using (var work = new UnitOfWork(context))
                         {
-                            var AsyncTrip = await work.Trip.GetId(trip.Id);
+                            var AsyncTrip = await work.Trip.GetId(Id);
                             if (AsyncTrip.Id > 0)
                             {
-                                work.Trip.Delete(trip);
+                                work.Trip.Delete(AsyncTrip);
                                 var result = await work.Commet();
                                 if (result == 1)
                                 {
@@ -215,11 +215,11 @@ namespace RESTfulBookingAPI.Controllers
                 {
                     postFile.CopyTo(strem);
                 }
-                return Ok(physicalPath);
+                return Ok(fileName);
             }
             catch
             {
-                return BadRequest("Cannot Save Your Image");
+                return BadRequest("anonymous.png");
             }
         }
     }

@@ -152,21 +152,21 @@ namespace RESTfulBookingAPI.Controllers
         // Delete: Users
         // if Not connection Error Return NoContent and Delete User
         // api/User/Put and Call User FromBody
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] User user)
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> Delete(int Id)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    if (user.Id > 0)
+                    if (Id > 0)
                     {
                         using (var work = new UnitOfWork(context))
                         {
-                            var Asyncuser = await work.User.GetId(user.Id);
+                            var Asyncuser = await work.User.GetId(Id);
                             if (Asyncuser.Id > 0)
                             {
-                                work.User.Delete(user);
+                                work.User.Delete(Asyncuser);
                                 var result = await work.Commet();
                                 if (result == 1)
                                 {
@@ -181,7 +181,7 @@ namespace RESTfulBookingAPI.Controllers
                 }
                 else
                 {
-                    logger.LogError($"Faild to Delete User : {user.Email}");
+                    logger.LogError("Faild to Delete User");
                     return BadRequest("Faild to Delete User");
                 }
             }

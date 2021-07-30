@@ -67,6 +67,33 @@ namespace RESTfulBookingAPI.Controllers
 
         }
 
+        // GET: Reservation
+        // if Not connection Error Return Successed and List Of ReservationByName
+        // api/Reservation/Get/GetNames
+        [HttpGet("GetNames")]
+        public async Task<IActionResult> GetNames()
+        {
+            try
+            {
+                using (var work = new UnitOfWork(context))
+                {
+                    var ReservationList = await work.Reservation.All();
+                    var ReservationNames = from user in ReservationList
+                                    select new
+                                    {
+                                        Name = user.ReservationDate
+                                    };
+                    return Ok(ReservationList);
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"Faild to get Reservation : {ex.Message}");
+                return BadRequest("Faild to get Reservation");
+            }
+
+        }
+
         // Post: Reservation
         // if Not connection Error Return Created Add New Reservation
         // api/Reservation/Post and Call New Reservation FromBody

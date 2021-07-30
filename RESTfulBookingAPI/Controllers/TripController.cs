@@ -5,7 +5,8 @@ using RESTfulBookingAPI.Models;
 using RESTfulBookingAPI.Models.Domain;
 using System;
 using System.IO;
-using System.Threading.Tasks;
+using System.Linq;
+using System.Threading.Tasks; 
 
 namespace RESTfulBookingAPI.Controllers
 {
@@ -59,6 +60,33 @@ namespace RESTfulBookingAPI.Controllers
                 {
                     var Trips = await work.Trip.GetId(Id);
                     return Ok(Trips);
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"Faild to get Trips : {ex.Message}");
+                return BadRequest("Faild to get Trips");
+            }
+
+        }
+
+        // GET: Trip
+        // if Not connection Error Return Successed and List Of TripsByName
+        // api/Trip/Get/GetNames
+        [HttpGet("GetNames")]
+        public async Task<IActionResult> GetNames()
+        {
+            try
+            {
+                using (var work = new UnitOfWork(context))
+                {
+                    var TripList = await work.Trip.All();
+                    var TripNames = from trip in TripList
+                                    select new
+                                    {
+                                        Name = trip.Name
+                                    };
+                    return Ok(TripNames);
                 }
             }
             catch (Exception ex)
@@ -185,7 +213,7 @@ namespace RESTfulBookingAPI.Controllers
                 }
                 else
                 {
-                    logger.LogError($"Faild to Delete Trip : {trip.Name}");
+                    logger.LogError($"Faild to Delete Trip");
                     return BadRequest("Faild to Delete Trip");
                 }
             }
@@ -222,5 +250,6 @@ namespace RESTfulBookingAPI.Controllers
                 return BadRequest("anonymous.png");
             }
         }
+
     }
 }

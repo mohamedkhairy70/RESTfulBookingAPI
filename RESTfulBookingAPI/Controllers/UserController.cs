@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using RESTfulBookingAPI.Models;
 using RESTfulBookingAPI.Models.Domain;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace RESTfulBookingAPI.Controllers
@@ -54,6 +55,33 @@ namespace RESTfulBookingAPI.Controllers
                 {
                     var users = await work.User.GetId(Id);
                     return Ok(users);
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"Faild to get User : {ex.Message}");
+                return BadRequest("Faild to get User");
+            }
+
+        }
+
+        // GET: User
+        // if Not connection Error Return Successed and List Of UserByName
+        // api/User/Get/GetNames
+        [HttpGet("GetNames")]
+        public async Task<IActionResult> GetNames()
+        {
+            try
+            {
+                using (var work = new UnitOfWork(context))
+                {
+                    var UserList = await work.User.All();
+                    var UserNames = from user in UserList
+                                    select new
+                                    {
+                                        Name = user.Email
+                                    };
+                    return Ok(UserNames);
                 }
             }
             catch (Exception ex)

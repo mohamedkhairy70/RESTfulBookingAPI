@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace RESTfulBookingAPI.Models
 {
-    public class GUIDRepository<T> : IRepository<T> where T : class
+    public class GUIDRepository<entity> : IRepository<entity> where entity : class
     {
         protected readonly BookingContext Context;
-        DbSet<T> Table { get; set; }
+        DbSet<entity> Table { get; set; }
 
         public GUIDRepository(BookingContext context)
         {
-            Table = context.Set<T>();
+            Table = context.Set<entity>();
             Context = context;
         }
 
@@ -24,7 +24,7 @@ namespace RESTfulBookingAPI.Models
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public async Task Add(T entity) => await Table.AddAsync(entity);
+        public async Task Add(entity entity) => await Table.AddAsync(entity);
 
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace RESTfulBookingAPI.Models
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public void Delete(T entity) => Table.Remove(entity);
+        public void Delete(entity entity) => Table.Remove(entity);
 
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace RESTfulBookingAPI.Models
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public void Update(T entity) => Table.Update(entity);
+        public void Update(entity entity) => Table.Update(entity);
 
 
         /// <summary>
@@ -48,20 +48,20 @@ namespace RESTfulBookingAPI.Models
         /// and NoTracking 
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<T>> All() => await Table.AsNoTracking().ToArrayAsync();
+        public async Task<IEnumerable<entity>> All() => await Table.AsNoTracking().ToArrayAsync();
 
         /// <summary>
         /// This Method Support Async Method For Get One Entity Call a FindAsync Method
         /// </summary>
         /// <returns></returns>
-        public async Task<T> GetId(int Id) => await Table.FindAsync(Id);
+        public async Task<entity> GetId(int Id) => await Table.FindAsync(Id);
 
         /// <summary>
         /// This Method For Search By Expression by Entity
         /// </summary>
         /// <param name="expression"></param>
         /// <returns>Boolean</returns>
-        public IQueryable<T> Where(Expression<Func<T, bool>> expression) => Table.Where<T>(expression);
+        public IQueryable<entity> Where(Expression<Func<entity, bool>> expression) => Table.Where<entity>(expression);
 
     }
 }

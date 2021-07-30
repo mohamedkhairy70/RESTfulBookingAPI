@@ -152,16 +152,12 @@ namespace RESTfulBookingAPI.Controllers
                     {
                         using (var work = new UnitOfWork(context))
                         {
-                            var AsyncTrip = await work.Trip.GetId(trip.Id);
-                            if (AsyncTrip.Id > 0)
+                            work.Trip.Update(trip);
+                            var result = await work.Commet();
+                            if (result == 1)
                             {
-                                work.Trip.Update(trip);
-                                var result = await work.Commet();
-                                if (result == 1)
-                                {
-                                    return Ok(trip);
-                                }
-                            }
+                                return Ok(trip);
+                            }                            
                         }
                     }
                     return BadRequest("Faild to Update Trip");
@@ -202,7 +198,7 @@ namespace RESTfulBookingAPI.Controllers
                                 var result = await work.Commet();
                                 if (result == 1)
                                 {
-                                    return NoContent();
+                                    return new JsonResult("Successed Delete");
                                 }
                             }
 

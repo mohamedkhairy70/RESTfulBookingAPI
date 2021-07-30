@@ -147,15 +147,11 @@ namespace RESTfulBookingAPI.Controllers
                     {
                         using (var work = new UnitOfWork(context))
                         {
-                            var Asyncuser = await work.Reservation.GetId(reservation.Id);
-                            if (Asyncuser.Id > 0)
+                            work.Reservation.Update(reservation);
+                            var result = await work.Commet();
+                            if (result == 1)
                             {
-                                work.Reservation.Update(reservation);
-                                var result = await work.Commet();
-                                if (result == 1)
-                                {
-                                    return Ok(reservation);
-                                }
+                                return Ok(reservation);
                             }
                         }
                     }
@@ -163,7 +159,7 @@ namespace RESTfulBookingAPI.Controllers
                 }
                 else
                 {
-                    logger.LogError($"Faild to Update reservation : {reservation.CustomerName}");
+                    logger.LogError($"Faild to Update reservation");
                     return BadRequest("Faild to Update reservation");
                 }
             }
@@ -197,7 +193,7 @@ namespace RESTfulBookingAPI.Controllers
                                 var result = await work.Commet();
                                 if (result == 1)
                                 {
-                                    return NoContent();
+                                    return new JsonResult("Successed Delete");
                                 }
                             }
 

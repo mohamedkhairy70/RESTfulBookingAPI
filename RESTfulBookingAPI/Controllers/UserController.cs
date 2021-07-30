@@ -148,16 +148,13 @@ namespace RESTfulBookingAPI.Controllers
                     {
                         using (var work = new UnitOfWork(context))
                         {
-                            var Asyncuser = await work.User.GetId(user.Id);
-                            if (Asyncuser.Id > 0)
+                            work.User.Update(user);
+                            var result = await work.Commet();
+                            if (result == 1)
                             {
-                                work.User.Update(user);
-                                var result = await work.Commet();
-                                if (result == 1)
-                                {
-                                    return Ok(user);
-                                }
+                                return Ok(user);
                             }
+                            
                         }
                     }
                     return BadRequest("Faild to Update User");
@@ -192,13 +189,13 @@ namespace RESTfulBookingAPI.Controllers
                         using (var work = new UnitOfWork(context))
                         {
                             var Asyncuser = await work.User.GetId(Id);
-                            if (Asyncuser.Id > 0)
+                            if (Asyncuser != null)
                             {
                                 work.User.Delete(Asyncuser);
                                 var result = await work.Commet();
                                 if (result == 1)
                                 {
-                                    return NoContent();
+                                    return new JsonResult("Successed Delete");
                                 }
                             }
 

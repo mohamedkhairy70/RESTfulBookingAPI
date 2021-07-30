@@ -105,7 +105,7 @@ namespace RESTfulBookingAPI.Controllers
                    
                     using (var work = new UnitOfWork(context))
                     {
-                        var IsExistsUser = work.User.Where(u => u.Email == user.Email);
+                        var IsExistsUser = work.User.Where(u => u.Email == user.Email).FirstOrDefault();
                         if (IsExistsUser == null)
                         {
                             await work.User.Add(user);

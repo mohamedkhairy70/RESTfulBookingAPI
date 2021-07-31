@@ -83,7 +83,7 @@ namespace RESTfulBookingAPI.Controllers
                                     {
                                         Name = user.ReservationDate
                                     };
-                    return Ok(ReservationList);
+                    return new JsonResult(ReservationList);
                 }
             }
             catch (Exception ex)
@@ -187,7 +187,7 @@ namespace RESTfulBookingAPI.Controllers
                         using (var work = new UnitOfWork(context))
                         {
                             var Asyncreservation = await work.Reservation.GetId(Id);
-                            if (Asyncreservation.Id > 0)
+                            if (Asyncreservation != null)
                             {
                                 work.Reservation.Delete(Asyncreservation);
                                 var result = await work.Commet();

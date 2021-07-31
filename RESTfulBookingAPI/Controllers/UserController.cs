@@ -81,7 +81,7 @@ namespace RESTfulBookingAPI.Controllers
                                     {
                                         Name = user.Email
                                     };
-                    return Ok(UserNames);
+                    return new JsonResult(UserNames);
                 }
             }
             catch (Exception ex)

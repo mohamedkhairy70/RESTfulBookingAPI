@@ -86,7 +86,7 @@ namespace RESTfulBookingAPI.Controllers
                                     {
                                         Name = trip.Name
                                     };
-                    return Ok(TripNames);
+                    return new JsonResult(TripNames);
                 }
             }
             catch (Exception ex)
@@ -192,7 +192,7 @@ namespace RESTfulBookingAPI.Controllers
                         using (var work = new UnitOfWork(context))
                         {
                             var AsyncTrip = await work.Trip.GetId(Id);
-                            if (AsyncTrip.Id > 0)
+                            if (AsyncTrip != null)
                             {
                                 work.Trip.Delete(AsyncTrip);
                                 var result = await work.Commet();
@@ -239,11 +239,11 @@ namespace RESTfulBookingAPI.Controllers
                 {
                     postFile.CopyTo(strem);
                 }
-                return Ok(fileName);
+                return new JsonResult(fileName);
             }
             catch
             {
-                return BadRequest("anonymous.png");
+                return new JsonResult("anonymous.png");
             }
         }
 

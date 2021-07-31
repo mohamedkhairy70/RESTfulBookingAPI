@@ -1,0 +1,24 @@
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-lable">User Email</label>
+    <div class="col-sm-10">
+        <input type="text" class="form-control" [(ngModel)]="Email"
+            placeholder="Please Enter Your Name...">
+    </div>
+
+    <label class="col-sm-2 col-form-lable">Password</label>
+    <div class="col-sm-10">
+        <input type="password" class="form-control" [(ngModel)]="Password"
+            placeholder="Please Enter Your Password...">
+    </div>
+</div>
+
+
+<button type="button" class="btn btn-primary" *ngIf="Id == 0"
+        (click)="addUser()">Add</button>
+<button type="button" class="btn btn-primary" *ngIf="Id != 0"
+        (click)="updateUser()">Update</button>
+
+
+
+

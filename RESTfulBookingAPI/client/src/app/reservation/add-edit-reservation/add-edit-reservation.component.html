@@ -1,0 +1,55 @@
+
+<div class="form-group row">
+    <label class="col-sm-2 col-form-lable">Reserved By</label>
+    <div class="col-sm-10">
+        <select class="form-control" [(ngModel)]="ReservedBy">
+            <option>--Select--</option>
+            <option *ngFor="let user of userList">
+                {{user.Name}}
+            </option>
+        </select>
+    </div>
+
+    <label class="col-sm-2 col-form-lable">Customer Name</label>
+    <div class="col-sm-10">
+        <input type="text" class="form-control" [(ngModel)]="CustomerName"
+            placeholder="Please Enter Your Customer Name...">
+    </div>
+
+    <label class="col-sm-2 col-form-lable">Reservation Date</label>
+    <div class="col-sm-10">
+        <input type="datetime"  class="form-control" [(ngModel)]="ReservationDate">
+    </div>
+
+    <label class="col-sm-2 col-form-lable">Creation Date</label>
+    <div class="col-sm-10">
+        <input type="datetime" class="form-control" [(ngModel)]="CreationDate">
+    </div>
+
+    <label class="col-sm-2 col-form-lable">Notes</label>
+    <div class="col-sm-10">
+        <input type="text" class="form-control" [(ngModel)]="Notes"
+            placeholder="Please Enter Your Notes...">
+    </div>
+
+    
+    <label class="col-sm-2 col-form-lable">Trip Name</label>
+    <div class="col-sm-10">
+        <select class="form-control" [(ngModel)]="TripName">
+            <option>--Select--</option>
+            <option *ngFor="let trip of tripList">
+                {{trip.Name}}
+            </option>
+        </select>
+    </div>
+</div>
+
+
+<button type="button" class="btn btn-primary" *ngIf="Id == 0"
+        (click)="addReservation()">Add</button>
+<button type="button" class="btn btn-primary" *ngIf="Id != 0"
+        (click)="updateReservation()">Update</button>
+
+
+
+

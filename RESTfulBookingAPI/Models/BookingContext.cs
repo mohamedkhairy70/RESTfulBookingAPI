@@ -9,9 +9,9 @@ namespace RESTfulBookingAPI.Models
     public class BookingContext : DbContext
     {
 
-        public DbSet<Trip> CompanyInformations { get; set; }
-        public DbSet<Reservation> Customers { get; set; }
-        public DbSet<User> UsersCompany { get; set; }
+        public DbSet<Trip> Trips { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<User>  Users { get; set; }
 
         public BookingContext(DbContextOptions<BookingContext> options) : base(options) 
         {

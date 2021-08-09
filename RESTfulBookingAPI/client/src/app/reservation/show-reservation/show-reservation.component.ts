@@ -52,10 +52,11 @@ export class ShowReservationComponent implements OnInit {
   deleteClick(value: any) {
     if (confirm("Are You Sure??")) {
       this.service.deleteReservation(value.Id).subscribe(res => {
-        alert(res.toString())
+        alert(res.toString());
+        this.refreshReservationList();
       });
     }
     this.ActivateAddEditReservationComp = false;
-    this.refreshReservationList();
+    
   }
 }

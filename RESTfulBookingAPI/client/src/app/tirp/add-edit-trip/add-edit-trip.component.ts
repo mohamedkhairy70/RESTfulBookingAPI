@@ -28,6 +28,7 @@ export class AddEditTripComponent implements OnInit {
     this.service.getTripList().subscribe(data => {
       this.Id = this.trip.Id;
       this.Name = this.trip.Name;
+      this.Price = this.trip.Price;
       this.CityName = this.trip.CityName;
       this.CreationDate = this.trip.CreationDate;
       this.ImageUrl = this.trip.ImageUrl;
@@ -38,6 +39,7 @@ export class AddEditTripComponent implements OnInit {
   addTrip() {
     var value = {
       Name: this.Name,
+      Price: this.Price,
       CityName: this.CityName,
       CreationDate: this.CreationDate,
       ImageUrl: this.ImageUrl
@@ -51,6 +53,7 @@ export class AddEditTripComponent implements OnInit {
     var value = {
       Id: this.Id,
       Name: this.Name,
+      Price: this.Price,
       CityName: this.CityName,
       CreationDate: this.CreationDate,
       ImageUrl: this.ImageUrl

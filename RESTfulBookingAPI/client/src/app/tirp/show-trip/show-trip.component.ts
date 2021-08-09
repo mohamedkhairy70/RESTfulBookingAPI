@@ -50,10 +50,11 @@ export class ShowTripComponent implements OnInit {
   deleteClick(value: any) {
     if (confirm("Are You Sure??")) {
       this.service.deleteTrip(value.Id).subscribe(res => {
-        alert(value.Name)
+        alert(value.Name);
+        this.refreshTripList();
       });
     }
     this.ActivateAddEditTripComp = false;
-    this.refreshTripList();
+    
   }
 }
